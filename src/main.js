@@ -65,7 +65,7 @@ const data = [
 ]
 
 
-const margin =  { top: 50, right: 50, bottom: 50,  left: 50}
+const margin =  { top: 50, right: 100, bottom: 100,  left: 100}
 const outerHeight = window.innerHeight
 const innerHeight = window.innerHeight - margin.bottom - margin.top
 const outerWidth = window.innerWidth
@@ -77,20 +77,18 @@ const svg = d3
     .attr('width', outerWidth)
     .attr('height', outerHeight)
 
+const yValue = d => d.city
+const xValue = d => d.population
+
 const g = svg
     .append('g')
     .attr('width', innerWidth)
     .attr('height', innerHeight)
     .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-g.append('rect').attr('width', 50)
-    .attr('height', 50).attr('fill', 'steelblue')
-
-
-
 const yScale = d3.scaleBand()
     .range([innerHeight, 0])
-    .domain(data.map(i => i.city))
+    .domain(data.map(yValue))
     .padding(0.2);
 
 const xScale = d3
@@ -98,18 +96,26 @@ const xScale = d3
     .range([0, innerWidth])
     .domain([0, 40000000]) ;
 
-//
-// g
-//     .selectAll('.bar')
-//     .data(data)
-//     .append('rect')
-//     .enter()
-//     .attr('class', 'bar')
-//     .attr('x', d => 0)
-//     .attr('y', d => 0)
-//     .attr('width', d => xScale(d.population))
-//     .attr('height', yScale.bandwidth())
-//     .attr('fill', 'steelblue');
+const xGroup = g.append('g').attr('transform', 'translate(0,' + innerHeight + ')')
+const yGroup = g.append('g');
+
+const xAxis = d3.axisBottom().scale(xScale);
+const yAxis = d3.axisLeft().scale(yScale);
+
+
+xGroup.call(xAxis)
+yGroup.call(yAxis)
+
+g
+    .selectAll('.bar')
+    .data(data)
+    .enter()
+    .append('rect')
+    .attr('class', 'bar')
+    .attr('y', d => yScale(yValue(d)))
+    .attr('width', d => xScale(xValue(d)))
+    .attr('height', yScale.bandwidth())
+    .attr('fill', 'steelblue');
 
 
 
