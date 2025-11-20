@@ -17,4 +17,5 @@
    8. change bars colors
 9. add titles
 10. add axis labels
+11. [Sun light foundation style guidelines](https://github.com/amycesal/dataviz-style-guide/blob/master/Sunlight-StyleGuide-DataViz.pdf)
 
