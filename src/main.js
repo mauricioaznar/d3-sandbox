@@ -101,7 +101,7 @@ const yGroup = g.append('g');
 
 const xAxis = d3.axisBottom()
     .scale(xScale)
-    .tickFormat(n => d3.format('.3s')(n))
+    .tickFormat(n => d3.format('.2s')(n))
     .tickSize(-innerHeight)
 const yAxis = d3.axisLeft()
     .scale(yScale);
