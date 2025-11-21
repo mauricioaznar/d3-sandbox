@@ -12,10 +12,10 @@
 5. change css 
    6. positioning 
    6. for text (make it bigger, change color)
-   6. remove ticks where obvious
+   6. ~~remove ticks where obvious~~
    7. add padding
    8. change bars colors
-9. add titles
-10. add axis labels
+9. ~~add titles~~
+10. ~~add axis labels~~
 11. [Sun light foundation style guidelines](https://github.com/amycesal/dataviz-style-guide/blob/master/Sunlight-StyleGuide-DataViz.pdf)
 
