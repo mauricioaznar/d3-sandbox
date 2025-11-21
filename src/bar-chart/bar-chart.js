@@ -1,4 +1,4 @@
-import './style.css'
+import '../style.css'
 import * as d3 from 'd3'
 
 const data = [
@@ -68,8 +68,8 @@ const data = [
 const margin =  { top: 150, right: 100, bottom: 150,  left: 300}
 const outerHeight = window.innerHeight
 const innerHeight = window.innerHeight - margin.bottom - margin.top
-const outerWidth = window.innerWidth
-const innerWidth = window.innerWidth - margin.left - margin.right
+const outerWidth = window.innerWidth - 100
+const innerWidth = window.innerWidth - margin.left - margin.right - 50
 
 const svg = d3
     .select('body')
@@ -142,10 +142,3 @@ g
     .attr('width', d => xScale(xValue(d)))
     .attr('height', yScale.bandwidth())
     .attr('fill', 'steelblue');
-
-
-
-
-
-
-console.log(svg)
