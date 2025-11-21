@@ -65,7 +65,7 @@ const data = [
 ]
 
 
-const margin =  { top: 50, right: 100, bottom: 100,  left: 100}
+const margin =  { top: 150, right: 100, bottom: 150,  left: 300}
 const outerHeight = window.innerHeight
 const innerHeight = window.innerHeight - margin.bottom - margin.top
 const outerWidth = window.innerWidth
@@ -94,17 +94,43 @@ const yScale = d3.scaleBand()
 const xScale = d3
     .scaleLinear()
     .range([0, innerWidth])
-    .domain([0, 40000000]) ;
+    .domain([0, 42000000]).nice() ;
 
 const xGroup = g.append('g').attr('transform', 'translate(0,' + innerHeight + ')')
 const yGroup = g.append('g');
 
-const xAxis = d3.axisBottom().scale(xScale);
-const yAxis = d3.axisLeft().scale(yScale);
+const xAxis = d3.axisBottom()
+    .scale(xScale)
+    .tickFormat(n => d3.format('.3s')(n))
+    .tickSize(-innerHeight)
+const yAxis = d3.axisLeft()
+    .scale(yScale);
 
 
-xGroup.call(xAxis)
-yGroup.call(yAxis)
+xGroup.call(xAxis).selectAll('.domain').remove()
+yGroup.call(yAxis).selectAll('.domain, .tick line').remove();
+
+xGroup
+    .append('text')
+    .attr('class','subtitle')
+    .text('Population')
+    .attr('x', innerWidth / 2)
+    .attr('y', 100);
+
+yGroup
+    .append('text')
+    .attr('class','subtitle')
+    .text('Cities')
+    .attr('y', -220)
+    .attr('x', -innerHeight / 2)
+    .attr('transform', "rotate(-90)")
+
+xGroup
+    .append('text')
+    .attr('class','title')
+    .attr('x', innerWidth / 2)
+    .text('Cities vs Population')
+    .attr('y', -innerHeight - 50)
 
 g
     .selectAll('.bar')

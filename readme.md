@@ -6,7 +6,7 @@
    5. ~~positioning~~
 3. axis
    4. ~~positioning~~ 
-   4. maybe add number format [d3.format](https://d3js.org/d3-format)
+   4. ~~maybe add number format [d3.format](https://d3js.org/d3-format)~~
    5. maybe remove ticks and domain (line)
    6. add tick grids
 5. change css 

@@ -13,3 +13,25 @@ body,
     height: 100%;
     width: 100%;
 }
+
+.tick text{
+    fill: #8E8883;
+    font-size: 2.3rem;
+}
+
+.tick line{
+    stroke: #C0C0BB;
+}
+
+.subtitle {
+    font-size: 3.5rem;
+}
+
+.title {
+    font-size: 4rem;
+    font-weight: bold;
+}
+
+.subtitle, .title {
+    fill: #655f5d;
+}
