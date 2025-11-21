@@ -6,7 +6,7 @@ function render (data) {
 
     console.log(data)
 
-    const margin =  { top: 150, right: 150, bottom: 150,  left: 200}
+    const margin =  { top: 100, right: 50, bottom: 150,  left: 250}
     const outerHeight = window.innerHeight
     const innerHeight = window.innerHeight - margin.bottom - margin.top
     const outerWidth = window.innerWidth - 100
@@ -36,7 +36,7 @@ function render (data) {
 
     const xScale = d3
         .scaleLinear()
-        .range([innerWidth, 0])
+        .range([0, innerWidth])
         .domain(d3.extent(data, xValue))
         .nice() ;
 
@@ -62,23 +62,15 @@ function render (data) {
         .attr('class','subtitle')
         .text(xLabel)
         .attr('x', innerWidth / 2)
-        .attr('y', 100);
+        .attr('y', 120);
 
     yGroup
         .append('text')
         .attr('class','subtitle')
         .text(yLabel)
-        .attr('y', -135)
-        .attr('y', -135)
+        .attr('y', -150)
         .attr('x', -innerHeight / 2)
         .attr('transform', "rotate(-90)")
-
-    xGroup
-        .append('text')
-        .attr('class','title')
-        .attr('x', innerWidth / 2)
-        .text('Cities vs Population')
-        .attr('y', -innerHeight - 50)
 
     g
         .selectAll('.circle')
@@ -89,7 +81,8 @@ function render (data) {
         .attr('r', 10)
         .attr('cy', d => yScale(yValue(d)))
         .attr('cx', d => xScale(xValue(d)))
-        .attr('fill', 'steelblue');
+        .attr('fill', 'red')
+        .attr('opacity', '0.3');
 
 }
 
