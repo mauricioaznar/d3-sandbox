@@ -86,8 +86,6 @@ function render (data) {
 
 }
 
-console.log(myData)
-
 /*
     acceleration: "12"
     "car name": "chevrolet chevelle malibu"
@@ -112,6 +110,6 @@ render(myData.map(d => {
         weight: Number(d.weight),
         origin: Number(d.origin),
         mpg: Number(d.mpg),
-
+        year: Number(d['model year'])
     }
 }))
