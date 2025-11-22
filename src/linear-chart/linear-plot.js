@@ -1,8 +1,11 @@
 import '../style.css'
 import * as d3 from 'd3'
-import myData from './auto-mpg.csv'
+import myData from './merida-yuc-may-2024.csv'
 
 function render (data) {
+
+    console.log(data)
+
     const margin =  { top: 100, right: 50, bottom: 150,  left: 250}
     const outerHeight = window.innerHeight
     const innerHeight = window.innerHeight - margin.bottom - margin.top
@@ -15,10 +18,10 @@ function render (data) {
         .attr('width', outerWidth)
         .attr('height', outerHeight)
 
-    const yValue = d => d.weight
-    const xValue = d => d.mpg
-    const xLabel = 'MPG'
-    const yLabel = 'Weight'
+    const yValue = d => d.temperature
+    const xValue = d => d.time
+    const yLabel = 'Temperature'
+    const xLabel = 'Time'
 
     const g = svg
         .append('g')
@@ -32,10 +35,10 @@ function render (data) {
         .nice();
 
     const xScale = d3
-        .scaleLinear()
+        .scaleTime()
         .range([0, innerWidth])
         .domain(d3.extent(data, xValue))
-        .nice() ;
+    1
 
     const xGroup = g.append('g').attr('transform', 'translate(0,' + innerHeight + ')')
     const yGroup = g.append('g');
@@ -44,12 +47,18 @@ function render (data) {
         .scale(xScale)
         .tickSize(-innerHeight)
         .tickPadding(20)
+        .ticks(6)
     const yAxis = d3.axisLeft()
         .scale(yScale)
         .tickSize(-innerWidth)
         .tickPadding(20)
     ;
 
+    const lineGenerator = d3
+        .line()
+        .x(d => xScale(xValue(d)))
+        .y(d => yScale(yValue(d)))
+        .curve(d3.curveBasis)
 
     xGroup.call(xAxis).selectAll('.domain').remove()
     yGroup.call(yAxis).selectAll('.domain').remove();
@@ -70,15 +79,16 @@ function render (data) {
         .attr('transform', "rotate(-90)")
 
     g
-        .selectAll('.circle')
+        .selectAll('.line-path')
         .data(data)
         .enter()
-        .append('circle')
-        .attr('class', 'circle')
-        .attr('r', 10)
-        .attr('cy', d => yScale(yValue(d)))
-        .attr('cx', d => xScale(xValue(d)))
-        .attr('fill', 'red')
+        .append('path')
+        .attr('class', 'line-path')
+        .attr('d', lineGenerator(data))
+        .attr('stroke', '#8B008B')
+        .attr('fill', 'none')
+        .attr('stroke-width', 5)
+        .attr('stroke-linejoin', 'round')
         .attr('opacity', '0.3');
 
 }
@@ -100,13 +110,7 @@ function render (data) {
 render(myData.map(d => {
     return {
         ...d,
-        acceleration: Number(d.acceleration),
-        cylinders: Number(d.cylinders),
-        displacement: Number(d.displacement),
-        horsepower: Number(d.horsepower),
-        weight: Number(d.weight),
-        origin: Number(d.origin),
-        mpg: Number(d.mpg),
-        year: Number(d['model year'])
+        time: new Date(d.time),
+        temperature: Number(d.temperature),
     }
 }))
