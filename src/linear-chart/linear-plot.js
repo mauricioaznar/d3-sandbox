@@ -3,9 +3,6 @@ import * as d3 from 'd3'
 import myData from './merida-yuc-may-2024.csv'
 
 function render (data) {
-
-    console.log(data)
-
     const margin =  { top: 100, right: 50, bottom: 150,  left: 170}
     const outerHeight = window.innerHeight
     const innerHeight = window.innerHeight - margin.bottom - margin.top
