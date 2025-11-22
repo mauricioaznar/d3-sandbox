@@ -35,3 +35,8 @@ body,
 .subtitle, .title {
     fill: #655f5d;
 }
+
+
+svg {
+    margin-bottom: 200px;
+}

@@ -79,6 +79,7 @@ const svg = d3
 
 const yValue = d => d.city
 const xValue = d => d.population
+const title = 'Cities vs Population'
 
 const g = svg
     .append('g')
@@ -87,7 +88,7 @@ const g = svg
     .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
 const yScale = d3.scaleBand()
-    .range([innerHeight, 0])
+    .range([0, innerHeight])
     .domain(data.map(yValue))
     .padding(0.2);
 
@@ -129,7 +130,7 @@ xGroup
     .append('text')
     .attr('class','title')
     .attr('x', innerWidth / 2)
-    .text('Cities vs Population')
+    .text(title)
     .attr('y', -innerHeight - 50)
 
 g

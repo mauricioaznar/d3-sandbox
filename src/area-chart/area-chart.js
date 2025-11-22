@@ -1,9 +1,10 @@
 import '../style.css'
 import * as d3 from 'd3'
-import myData from './auto-mpg.csv'
+import myData from './Merida-Population-Total-Population.csv'
 
 function render (data) {
-    const margin =  { top: 100, right: 0, bottom: 150,  left: 200}
+
+    const margin =  { top: 100, right: 50, bottom: 120,  left: 280}
     const outerHeight = window.innerHeight
     const innerHeight = window.innerHeight - margin.bottom - margin.top
     const outerWidth = window.innerWidth - 100
@@ -14,12 +15,13 @@ function render (data) {
         .append('svg')
         .attr('width', outerWidth)
         .attr('height', outerHeight)
+        .attr('margin-top', '120')
 
-    const yValue = d => d.weight
-    const xValue = d => d.mpg
-    const xLabel = 'MPG (miles per gallon)'
-    const yLabel = 'Weight'
-    const title = 'Fuel efficiency'
+    const yValue = d => d.temperature
+    const xValue = d => d.time
+    const yLabel = 'People'
+    const xLabel = 'Year'
+    const title = 'Mérida\'s Population'
 
     const g = svg
         .append('g')
@@ -29,27 +31,57 @@ function render (data) {
 
     const yScale = d3.scaleLinear()
         .range([innerHeight, 0])
-        .domain(d3.extent(data, yValue))
+        .domain([0, d3.max(data, yValue)])
         .nice();
 
     const xScale = d3
-        .scaleLinear()
+        .scaleTime()
         .range([0, innerWidth])
         .domain(d3.extent(data, xValue))
-        .nice() ;
+        .nice();
 
-    const xGroup = g.append('g').attr('transform', 'translate(0,' + innerHeight + ')')
-    const yGroup = g.append('g');
+
+    const areaGenerator = d3
+        .area()
+        .x(d => xScale(xValue(d)))
+        .y0(d => innerHeight)
+        .y1(d => yScale(yValue(d)))
+        .curve(d3.curveBasis)
+
+    g
+        .selectAll('.line-path')
+        .data(data)
+        .enter()
+        .append('path')
+        .attr('class', 'line-path')
+        .attr('d', areaGenerator(data))
+        .attr('stroke', 'none')
+        .attr('fill', '#2F4F4F')
+        .attr('stroke-width', 5)
+        .attr('stroke-linejoin', 'round')
+        .attr('opacity', '0.3');
+
+
+    const xGroup = g
+        .append('g')
+        .attr('transform', 'translate(0,' + innerHeight + ')')
+    const yGroup = g
+        .append('g');
+
+
+
 
     const xAxis = d3.axisBottom()
         .scale(xScale)
         .tickSize(-innerHeight)
         .tickPadding(20)
+        .ticks(6)
     const yAxis = d3.axisLeft()
         .scale(yScale)
         .tickSize(-innerWidth)
         .tickPadding(20)
     ;
+
 
 
     xGroup.call(xAxis).selectAll('.domain').remove()
@@ -66,56 +98,24 @@ function render (data) {
         .append('text')
         .attr('class','subtitle')
         .text(yLabel)
-        .attr('y', -135)
+        .attr('y', -200)
         .attr('x', -innerHeight / 2)
         .attr('transform', "rotate(-90)")
-
 
     xGroup
         .append('text')
         .attr('class','title')
         .attr('x', innerWidth / 2)
         .text(title)
-        .attr('y', -innerHeight - 20)
-
-    g
-        .selectAll('.circle')
-        .data(data)
-        .enter()
-        .append('circle')
-        .attr('class', 'circle')
-        .attr('r', 10)
-        .attr('cy', d => yScale(yValue(d)))
-        .attr('cx', d => xScale(xValue(d)))
-        .attr('fill', 'red')
-        .attr('opacity', '0.3');
+        .attr('y', -innerHeight - 30)
 
 }
-
-/*
-    acceleration: "12"
-    "car name": "chevrolet chevelle malibu"
-    cylinders: "8"
-    displacement: "307"
-    horsepower: "130"
-    "model year": "70"
-    mpg: "18"
-    origin: "1"
-    weight: "3504"
- */
-
 
 
 render(myData.map(d => {
     return {
         ...d,
-        acceleration: Number(d.acceleration),
-        cylinders: Number(d.cylinders),
-        displacement: Number(d.displacement),
-        horsepower: Number(d.horsepower),
-        weight: Number(d.weight),
-        origin: Number(d.origin),
-        mpg: Number(d.mpg),
-        year: Number(d['model year'])
+        time: new Date(d.year),
+        temperature: Number(d.population),
     }
 }))
