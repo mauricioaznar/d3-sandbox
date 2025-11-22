@@ -32,14 +32,12 @@ function render (data) {
 
     const yScale = d3.scaleLinear()
         .range([innerHeight, 0])
-        .domain(d3.extent(data, yValue))
-        .nice();
+        .domain([d3.min(data, yValue), d3.max(data, yValue)])
 
     const xScale = d3
         .scaleTime()
         .range([0, innerWidth])
         .domain(d3.extent(data, xValue))
-    1
 
     const xGroup = g.append('g').attr('transform', 'translate(0,' + innerHeight + ')')
     const yGroup = g.append('g');
@@ -94,7 +92,7 @@ function render (data) {
         .append('path')
         .attr('class', 'line-path')
         .attr('d', lineGenerator(data))
-        .attr('stroke', '#8B008B')
+        .attr('stroke', 'mediumturquoise ')
         .attr('fill', 'none')
         .attr('stroke-width', 5)
         .attr('stroke-linejoin', 'round')
