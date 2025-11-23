@@ -22,7 +22,7 @@ const svg = d3
 
 
 function render () {
-    fruitBowl(svg, { fruits })
+    fruitBowl(svg, { fruits, height: innerHeight, width: innerWidth })
 }
 
 render()
