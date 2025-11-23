@@ -21,9 +21,14 @@ export function fruitBowl (selection, props) {
         .attr('rx', 50)
         .attr('ry', 50);
 
-    const groups = selection.selectAll('g')
+    const groups = selection
+        .selectAll('g')
         .data(fruits, (d, i) => { return d.id});
-    const groupEnter = groups.enter().append('g');
+
+    const groupEnter = groups
+        .enter()
+        .append('g');
+
     groupEnter
         .merge(groups)
         .transition()
@@ -32,7 +37,10 @@ export function fruitBowl (selection, props) {
             'transform',
             (d, i) => `translate(${i * 120 + 60},${height / 2})`,
         );
-    groups.exit().remove();
+
+    groups
+        .exit()
+        .remove();
 
     groupEnter
         .append('circle')
