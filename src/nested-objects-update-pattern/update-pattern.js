@@ -1,18 +1,17 @@
 import * as d3 from 'd3'
 import {fruitBowl} from "./fruit-bowl.js";
-
-const makeFruit = function (type) {
+const makeFruit = type => {
     return {
         type,
         id: Math.random()
     }
 }
-
 const margin =  { top: 100, right: 0, bottom: 150,  left: 200}
 const innerHeight = (window.innerHeight - margin.bottom - margin.top) / 3
 const innerWidth = window.innerWidth - margin.left - margin.right - 50
 
-let fruits = d3.range(5)
+let fruits = d3
+    .range(5)
     .map((_, i) => makeFruit('apple'))
 
 const svg = d3
