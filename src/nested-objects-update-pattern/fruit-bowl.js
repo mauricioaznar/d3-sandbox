@@ -1,4 +1,6 @@
 import * as d3 from 'd3'
+
+
 const colorScale = d3.scaleOrdinal()
     .range(['#5C0C31', '#1B5C0C'])
     .domain(['apple', 'lemon'])
