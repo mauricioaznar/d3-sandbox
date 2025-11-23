@@ -8,8 +8,8 @@ const radiusScale = d3.scaleOrdinal()
     .domain(['lemon', 'apple'])
 
 export function fruitBowl (selection, props) {
-
     const { fruits, height, width } = props;
+
     const bowl = selection.selectAll('rect')
         .data([null])
         .enter()
