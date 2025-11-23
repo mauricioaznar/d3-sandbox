@@ -60,6 +60,4 @@ export function fruitBowl (selection, props) {
         .style('opacity', 1)
         .text((d) => d.type)
         .attr('y', 80);
-    ;
-
 }
